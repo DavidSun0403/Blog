@@ -1,0 +1,129 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title><%= title %> - Microblog</title>
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+    <style type="text/css">
+      body {
+        padding-top: 30px;
+        padding-bottom: 40px;
+      }
+    </style>
+    <link href="stylesheets/bootstrap-responsive.css" rel="stylesheet">
+	<script type="text/javascript" src='/socket.io/socket.io.js'></script>
+	<script src="javascripts/jquery.js"></script>
+	<script src="/javascripts/bootstrap.min.js"></script>
+	<script type="text/javascript" src="javascripts/task.js"></script>
+  </head>
+  <body>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/">Microblog</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active"><a href="/">首頁</a></li>
+              <% if (!user) { %>
+                <li><a href="/login">登入</a></li>
+                <li><a href="/reg">註冊</a></li>
+              <% } else { %>
+				<li><a href="/searchuser?user=<%=user.name%>"><%=user.name%></a></li>
+				<li><a href="/post">发状态</a></li>
+				<li><a href="/changepassword">修改密码</a></li>
+				<li><a href="/upload">分享照片</a></li>
+				<li><a href="/upload2">分享音乐</a></li>
+				<li><a href="/task">任务中心</a></li>
+                <li><a href="/logout">登出</a></li>
+ <li> <form action="/searchall" class="navbar-search" method="post" >
+					<input  name="search" type="text" placeholder="搜索..." class="search-query span3" required/>
+					<button type="submit" class="btn" >Search</button>
+				</form>
+		</li>
+              <% } %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+	<div id="myCarousel" class="carousel slide">
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+  </ol>
+  <!-- Carousel items -->
+  <div class="carousel-inner" align="center">
+    <div class="active item" ><img src='/images/lunbo1.jpg' ></div>
+    <div class="item"><img src='/images/lunbo2.jpg'></div>
+    <div class="item"><img src='/images/lunbo3.jpg'></div>
+  </div>
+  <!-- Carousel nav -->
+  <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+  <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+</div>
+
+<div class="row-fluid" >
+<div class="span1">
+在线成员：
+<div id="nicknames"  ></div>
+</div>
+<div class="span3">
+<h3>发布任务</h3>
+
+        任务内容：  <textarea rows="2" cols="2" id="content" onclick="this.innerHTML='';" style="width:200px;" placeholder="请输入您要发布的任务内容..."></textarea><br />
+		任务地点：
+<select id="place" style="width:215px;" >
+  <option>南一</option>
+  <option>南二</option>
+  <option>南三</option>
+  <option>教一</option>
+  <option>教二</option>
+  <option>教三</option>
+  <option>教四</option>
+  <option>教五</option>
+</select></br>
+		开始日期：<input type="date" id="startday" style="margin-left:5px;width:200px"   required></br>
+		开始时间：<input type="time" id="starttime" style="margin-left:5px;width:200px;"  required></br>
+		结束日期：<input type="date" id="endday" style="margin-left:5px;width:200px;"  required></br>
+		结束时间：<input type="time" id="endtime" style="margin-left:5px;width:200px;"  required></br>
+       <div align="right"><input type="button" value="发布" class="btn" style="margin-right:10px" id="confirm"></div></br>
+      </div>
+<div class="span4">
+<h3>我的任务</h3>
+<style type="text/css"> 
+div.RoundedCorner{background: #9BD1FA} 
+b.rtop, b.rbottom{display:block;background: #FFFFFF} 
+b.rtop b, b.rbottom b{display:block;height: 1px;overflow: hidden; background: #9BD1FA} 
+b.r1{margin: 0 5px} 
+b.r2{margin: 0 3px} 
+b.r3{margin: 0 2px} 
+b.rtop b.r4, b.rbottom b.r4{margin: 0 1px;height: 2px} 
+</style> 
+<div id="lines"  ></div>
+		</div>
+<div class="span4">
+<h3>所有任务</h3>
+<style type="text/css"> 
+div.RoundedCorner2{background: #FFDAB9} 
+c.rtop, c.rbottom{display:block;background: #FFFFFF} 
+c.rtop c, c.rbottom c{display:block;height: 1px;overflow: hidden; background: #FFDAB9} 
+c.r1{margin: 0 5px} 
+c.r2{margin: 0 3px} 
+c.r3{margin: 0 2px} 
+c.rtop c.r4, c.rbottom c.r4{margin: 0 1px;height: 2px} 
+</style> 
+<div id="linesall"  ></div>
+		</div>
+
+
+<p id="p_from" hidden="hidden"><%- user.name%></p>
+
+
+

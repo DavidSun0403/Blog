@@ -1,0 +1,22 @@
+<%- include header %>
+   <% if(contents!=''){%> 要搜索的内容是：<%= contents %>，共有<%=num%>条,内容如下：</br>
+   <% locals.posts.forEach(function(post, index){ %>
+	<div class="row">
+  <div class="span2"><%if(post.title!='picshare')  {%><a href="#"><%= post.title %></a><% } %></div>
+  <div class="span2"></div>
+  <div class="span2"></div>
+
+  <div class="span2"><%= post.time %> by:<a href="#"><%= post.user %></a></div>
+  </div>
+    <div align='left'>
+	<%if(post.url)  {%><img src='<%= post.url %>' width='500' height='350'><% } %> </br>
+	<%- post.post %> </br>
+	</div>
+<div align='right'><a  href="delete?id=<%= post.id %>&user1=<%if(user)  {%><%=user.name%><% } %>&user2=<%= post.user %>"> 删除</a></div>    </br>
+		
+<% }) %> 
+   <%}%>
+   <% if(contents==''){%> <div class="alert alert-error">
+			您要搜索的内容是空的！！！请重新输入要搜索的内容
+		</div><%}%><br />
+<%- include footer %>

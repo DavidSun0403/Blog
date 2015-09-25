@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title><%= title %> - Microblog</title>
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+	<link rel='stylesheet' href='/stylesheets/scojs.css' />
+    <style type="text/css">
+      body {
+        padding-top: 30px;
+        padding-bottom: 40px;
+      }
+    </style>
+    <link href="stylesheets/bootstrap-responsive.css" rel="stylesheet">
+	<script src="javascripts/jquery.js"></script>
+	<script src="/javascripts/bootstrap.min.js"></script>
+  </head>
+  <body>
+  
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/">NianNian</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active"><a href="/">首頁</a></li>
+              <% if (!user) { %>
+                <li><a href="/login">登入</a></li>
+                <li><a href="/reg">註冊</a></li>
+              <% } else { %>
+				<li><a href="/searchuser?user=<%=user.name%>"><%=user.name%></a></li>
+				<li><a href="/post">发状态</a></li>
+				<li><a href="/changepassword">修改密码</a></li>
+				<li><a href="/upload">分享照片</a></li>
+				<li><a href="/upload2">分享音乐</a></li>
+				<li><a href="/task">任务中心</a></li>
+                <li><a href="/logout">登出</a></li>
+ <li> <form action="/searchall" class="navbar-search" method="post" >
+					<input  name="search" type="text" placeholder="搜索..." class="search-query span2" required/>
+					<button type="submit" class="btn" >Search</button>
+				</form>
+		</li>
+              <% } %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+	<div id="myCarousel" class="carousel slide">
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+  </ol>
+  <!-- Carousel items -->
+  <div class="carousel-inner" align="center">
+    <div class="active item" ><img src='/images/lunbo1.jpg' ></div>
+    <div class="item"><img src='/images/lunbo2.jpg'></div>
+    <div class="item"><img src='/images/lunbo3.jpg'></div>
+  </div>
+  <!-- Carousel nav -->
+  <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+  <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+</div>
+	
+    <div id="container" class="container">
+	<div class="row">
+	<div class="span3">
+
+	</div> 
+   
+
+    <div class="span6">  
+      

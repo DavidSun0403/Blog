@@ -1,0 +1,13 @@
+<%- include header %>
+<%if(errorcode==true){ %> 
+<div class="alert alert-error">
+			您没有权限进行删除！
+		</div>
+<%}%>
+<%if(errorcode==false){ %> 
+<form method="post">
+    确认要删除吗？<br />
+    <input type="submit" value="删除" />
+</form>
+<%}%>
+<%- include footer %>

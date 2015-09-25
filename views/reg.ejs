@@ -1,0 +1,32 @@
+<%- include header %>
+<script type="text/javascript">
+$(function(){
+        $("#username").blur(function(){
+            var params ={
+                username: $("#username").val(),
+            };
+			 $.ajax({
+                data: params,
+                url: '/regCheck',
+                dataType: 'json',
+                cache: false,
+                timeout: 5000,
+                success: function(data){ 
+				   $("#message").html(data.data);
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    alert('error ' + textStatus + " " + errorThrown);  
+                }
+            });
+        });
+
+    });
+</script>
+
+<form method="post">
+	<Strong>用户名：</Strong><input type="text" name="username" id="username" style="margin-left:30px" required/><span id="message"></span><br />
+	<Strong>密码：</Strong>	<input type="password" name="password"style="margin-left:40px" required/><br />
+	<Strong>确认密码：</Strong><input type="password" name="password-repeat"style="margin-left:20px" required/><br />
+			<input type="submit" value="注册" class="btn"/>
+</form>
+<%- include footer %>

@@ -1,0 +1,24 @@
+<script>
+function isMusic(){
+	
+    var regImg = new RegExp(/\.(mp3|wav|wma)$/);
+    var obj=document.getElementById('thumbnail').value;
+    if(obj.match(regImg)){
+   	$("#123").click();
+    }
+	else{
+        alert('请上传音乐文件');
+	
+	
+    }
+}
+</script>
+<%- include header %>
+	<form method="post" enctype="multipart/form-data" >
+  <input type="file" name="thumbnail" id="thumbnail" required><br />
+   图片描述：
+  <textarea name="pic" rows="3" cols="100" onclick="this.innerHTML='';" style="color=0000ff">请在这输入您对上传音乐的描述...</textarea><br />
+  <input type="button" id="confirm" class="btn" onclick="isMusic()" value="提交">
+   <input type="submit" id="123" hidden="hidden" >
+</form>
+<%- include footer %>

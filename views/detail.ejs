@@ -1,0 +1,24 @@
+<%- include header %>
+<%if(url){%>
+<img src="<%=url%>" width='100%' height='100%'></img>
+<%}%>
+<form method="post">
+    <% if(mindcode!=''){%>
+     标题：
+	<input type="hidden" name="id" value=<%=id%> /></input>
+   <%-title%><br />
+    正文：<br />
+   <%-post%><br />
+	<input type="button" onclick="javascript:window.location.href='/'" class="button glow button-rounded button-flat" value='返回'/>
+	<%}%>
+	 <% if(mindcode==''){%>
+    标题：<br />
+	<input type="hidden" name="id" value=<%=id%> /></input>
+    <input type="text" name="title" value=<%=title%> /><br />
+    正文：<br />
+    <textarea name="post" rows="20" cols="60" style="width: 400px; height: 339px;" ><%=post%></textarea><br />
+    <input type="submit" value="修改" class="button glow button-rounded button-flat" />
+	<input type="button" onclick="javascript:window.location.href='/'" class="button glow button-rounded button-flat" value='返回'/>
+	<%}%>
+</form>
+<%- include footer %>

@@ -1,0 +1,312 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+<style media="all" type="text/css">
+body{
+	font-size:100%;
+	margin:0;
+	padding:0;
+}
+.showInfo{
+   border:1px solid #F00;
+    right:0px;bottom:0px;width:140px;height:70px;border:1px solid #F00;position:fixed;
+ 	_position:absolute;
+    _top: expression(documentElement.scrollTop);
+    _left: expression(documentElement.scrollLeft);
+	z-index:999;
+}
+.talkWinow{
+   background-image:url(/images/beijing2.jpg);
+   left:650px;bottom:0px;width:380px;height:500px;border:1px solid #F00;position:fixed;
+	_position:absolute;
+    _top: expression(documentElement.scrollTop);
+    _left: expression(documentElement.scrollLeft);
+	z-index:999;
+   
+}
+
+.friend{
+   right:0px;width:100px;height:600px;border:1px solid #F00;position:fixed;margin-top:120px;
+	_position:absolute;
+    _top: expression(documentElement.scrollTop);
+    _left: expression(documentElement.scrollLeft);
+   
+}
+</style>
+    <title><%= title %> - Microblog</title>
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+	<link rel='stylesheet' href='/stylesheets/scojs.css' />
+    <style type="text/css">
+      body {
+        padding-top: 30px;
+        padding-bottom: 40px;
+      }
+    </style>
+    <link href="stylesheets/bootstrap-responsive.css" rel="stylesheet">
+	<script src="javascripts/jquery.js"></script>
+	<script src="javascripts/message.js"></script>
+	<script src="/javascripts/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/javascripts/player.js"></script>
+  </head>
+  <script type="text/javascript">
+   $(function(){
+     $("#talkWinow").hide();
+     $("#showInfo").hide();
+   });
+  </script>
+  <body>
+  <%if(user!='未登陆'){%>
+	<div id="friend" class="friend">
+	<div style="margin-left:10px;"><h4><strong>Friends:</strong></h4></div>
+	 <%for(var i=0; i<friends.length;i++){%>
+		<div id="<%=friends[i]%>" align="center" style="margin-top=10px;margin-left:10px" onclick="talkTo(this.id)"><%-friends[i]%></div>
+	<%}%>
+	</div>
+	<%}%>
+	<div class="talkWinow" id="talkWinow">
+	    <script type="text/javascript" src='http://10.22.7.171:3002/socket.io/socket.io.js'></script>
+		<script type="text/javascript" src="message.js"></script>
+	    <div style="height:500px;width:80px; position: absolute;">
+			<div id='targets' style='height:500px;width:70px; position: absolute;'></div>
+			<div id='deletes' style='height:500px;width:10px; margin-left:70px;position: absolute; '></div>
+		</div>
+		<div id='chatall' style='height:500px;width:300px; margin-left:80px;position: absolute; border:1px solid #F00;'>
+		<div align="center" id='show' style='height:350px;width:300px;position: absolute;'></div>
+		<div id="usertalk"></div>
+		<div id="input">
+			<textarea style='width:97%;margin-top:370px' id="content" onclick="this.innerHTML='';"  placeholder="请输入您要发送的信息内容..."></textarea>
+			<div align="right">
+				<input type="button" style='margin-right:120px' value="查看历史记录" id="history">
+				<input type="button" value="发送" id="confirm"></div>
+<input id="to" disabled="true" hidden="hidden"></br>
+<input id="from" style='margin-left:17px' hidden="hidden" value="<%=user.name%>">
+			</div>
+		</div>	
+	</div>
+		<div class="showInfo" id="showInfo">
+	       <div id='all' >
+			<div id='title' hidden='hidden'>新消息</div>
+			<div id='show2' hidden='hidden'></div>
+			<div id='showgroup' hidden='hidden'></div>
+			</div>
+	</div>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/">NianNian</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active"><a href="/">首頁</a></li>
+              <% if (user=='未登陆') { %>
+                <li><a href="/login">登入</a></li>
+                <li><a href="/reg">註冊</a></li>
+              <% } else { %>
+				<li><a href="/searchuser?user=<%=user.name%>"><%=user.name%></a></li>
+				<li><a href="/post">发博文</a></li>
+				<li><a href="/upload">分享图片</a></li>
+				<li><a href="/upload2">分享音乐</a></li>
+				<li><a href="/task">任务中心</a></li>
+				<li><a href="/changepassword">修改密码</a></li>
+                <li><a href="/logout">登出</a></li>
+ <li> <form action="/searchall" class="navbar-search" method="post" >
+					<input  name="search" type="text" placeholder="搜索..." class="search-query span2" required/>
+					<button type="submit" class="btn" >Search</button>
+				</form>
+		</li>
+              <% } %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+	<div id="myCarousel" class="carousel slide">
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner" align="center">
+    <div class="active item" ><img src='/images/lunbo1.jpg' ></div>
+    <div class="item"><img src='/images/lunbo2.jpg' ></div>
+    <div class="item"><img src='/images/lunbo3.jpg' ></div>
+  </div>
+  <!-- Carousel nav -->
+  <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+  <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+</div>
+	
+    <div id="container" class="container">
+	<div class="row">
+	<div class="span1"></div>
+	<div class="span2">
+	<style type="text/css"> 
+	div.RoundedCorner{background: #EDEDED} 
+	b.rtop, b.rbottom{display:block;background: #FFFFFF} 
+	b.rtop b, b.rbottom b{display:block;height: 1px;overflow: hidden; background: #EDEDED} 
+	b.r1{margin: 0 5px} 
+	b.r2{margin: 0 3px} 
+	b.r3{margin: 0 2px} 
+	b.rtop b.r4, b.rbottom b.r4{margin: 0 1px;height: 2px} 
+	</style> 
+	<div class="RoundedCorner" ><b class="rtop"><b class="r1"></b><b class="r2"></b><b class="r3"></b><b class="r4"></b></b>
+	<% if(user){%>
+	<div><h4><strong>热门博文Top10：</strong></h4></div>
+	<%var sort=[];%>
+	<%for(var n=0;n<postsall.length;n++){ sort[n]=postsall[n]}%>
+    <%var len = sort.length;%>
+    <% for (var i=1; i<len; i++) {%>
+     <%for (var j=0; j<len-i; j++) {%>
+     <% if (sort[j].pv < sort[j+1].pv) {%>
+	<%	var temp =sort[j];%>
+	<%	sort[j]=sort[j+1];%>
+	<%	sort[j+1]=temp;%>
+	 <% }}}%>
+	<%if(sort.length>=10){%>
+	<%for(var l=0; l<10 ;l++){%>
+	<div>
+	<div align="left" style="margin-left:10px"><strong><%-l+1%>、 <%=sort[l].user%>:</strong></br></div>
+	<div align="right" style="margin-right:10px"><a href=detail?id=<%= sort[l].id %>&user=<%=sort[l].user%>><strong><%= sort[l].title %></strong></a><br/></div>
+	点击数：<%-sort[l].pv%></div>
+	<%}}%>
+	<%if(sort.length<10){%>
+	<%for(var l=0; l<sort.length ;l++){%>
+	<div>
+	<div align="left" style="margin-left:10px"><strong><%-l+1%>、 <%=sort[l].user%>:</strong></br></div>
+	<div align="right" style="margin-right:10px"><a href=detail?id=<%= sort[l].id %>&user=<%=sort[l].user%>><strong><%= sort[l].title %></strong></a><br/></div>
+	点击数：<%-sort[l].pv%></div>
+	<%}}%>
+<%}%>
+	</div> 
+	<b class="rbottom"><b class="r4"></b><b class="r3"></b><b class="r2"></b><b class="r1"></b></b></div>
+    <div class="span6" >  
+    <div class="RoundedCorner" ><b class="rtop"><b class="r1"></b><b class="r2"></b><b class="r3"></b><b class="r4"></b></b> 
+
+<% locals.posts.forEach(function(post, index){ %>
+	<div class="row" style="margin-top:20px">
+  <div class="span3"><h2><a style="margin-right:10px; margin-left:10px" href=detail?id=<%= post.id %>&user=<%=post.user%>><%= post.title %></a></h2><br/ ></div>
+  <div class="span3"></div>
+  <div class="span3"><h5><%= post.time %> by:<a href="/searchuser?user=<%= post.user %>"><%= post.user %></a></h5></div>
+  </div>
+    <div>
+	<%if(post.url){%>
+	<%if(post.url.substring(post.url.indexOf('.')+1,post.url.length)=='jpg'){%>
+	<div align='center'><a href="#<%=post.id%>11"  data-toggle="modal"><img src="<%=post.url%>" width='30%' height='30%'></img></a></div>
+	<div id="<%=post.id%>11" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal">×</button>		
+  <img src="<%=post.url%>" width='100%' height='100%'></img>
+  </div>
+</div>
+<div align="center"><%- post.post %></div> </br>
+	<%}%>
+	<%if(post.url.substring(post.url.indexOf('.')+1,post.url.length)=='mp3'){%>
+	<div align='center'>
+		<audio controls="controls">
+			<source src="<%=post.url%>" type="audio/ogg">
+			<source src="<%=post.url%>" type="audio/mpeg">
+			Your browser does not support the audio element.
+		</audio>
+	</div>
+	<%}%>
+	<%}%>
+
+	
+
+	<%if(!post.url){%>
+	<% var content=post.post%>
+									<% var length=content.length%>
+									<%if(length>20){%>
+										<%= content.substr(0,50)+'......' %>
+									<%}else{%>
+										<%= content %>
+									<%}%>	
+	<%}%>
+	<%if(user){%>
+	<%if(user.name==post.user){%>
+	<div class="row" style="margin-top:10px">
+	<div class="span4">
+	<div align="left"><strong style="margin-right:10px; margin-left:10px">阅读数：<%-post.pv%></strong></div></div>
+	<div class="span2"><a data-trigger="confirm" class="btn btn-danger" style="margin-right:10px; margin-left:10px" href="delete?id=<%= post.id %>&user1=<%=user.name%>&user2=<%= post.user %>"> 删除</a><a href="#<%=post.id%>" role="button" class="btn btn-primary" data-toggle="modal" style="margin-right:10px; margin-left:10px">回复</a></div></div>
+	
+	<%}%>
+	<%if(user.name!=post.user){%>
+		<div class="row" >
+	<div class="span4">
+	<div align="left"><strong style="margin-right:10px; margin-left:10px">阅读数：<%-post.pv%></strong></div></div>
+	<div class="span2"><a href="#<%=post.id%>" role="button" class="btn btn-primary" data-toggle="modal" style="margin-right:10px; margin-left:85px">回复</a></div></div>
+	<%}%>
+	<div id="<%=post.url%>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">回复框</h3>
+  </div>
+  <div class="modal-body">
+    <p>请输入您要回复的内容</p>
+  </div>
+  <div class="modal-footer">
+  <textarea name="reply" rows="2" cols="170"></textarea> 
+	<input type="submit" value="回复" class="btn"/> <input type="hidden" name="id"  value="<%=post.id%>"/><input type="hidden" name="username"  value="<%=user.name%>"/>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+  </div>
+	</div>
+	
+	<form method="post" action="/">
+	<div id="<%=post.id%>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">回复框</h3>
+  </div>
+  <div class="modal-body">
+    <p>请输入您要回复的内容</p>
+  </div>
+  <div class="modal-footer">
+  <textarea name="reply" rows="2" cols="170"></textarea> 
+	<input type="submit" value="回复" class="btn"/> <input type="hidden" name="id"  value="<%=post.id%>"/><input type="hidden" name="username"  value="<%=user.name%>"/>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+  </div>
+</div>
+    </form>
+	<%}%>
+	</div>
+	<% if(post.reply)  {%>
+	<div class="accordion-group">
+	<div class="accordion-heading">
+<a class="accordion-toggle" data-toggle="collapse"  data-toggle="false" data-parent="true" href="#<%= post.replynum%><%=post.id%>">
+  共有<strong><%= post.replynum%></strong>条回复，查看具体内容请点击这里。
+</a>
+  </div></div>
+  <%}%>
+<div id="<%= post.replynum%><%=post.id%>" class="collapse" data-toggle="true" data-parent="true" > 
+<%if(post.reply){%>
+<% var replys = []%>
+<% replys = post.reply.split(";")%>
+<% replys.forEach(function(reply, index){ %>
+<%- reply %></br>
+<%});}%>
+</div>
+
+<% }); %> 
+    
+<div class="pagination" >
+  <ul>
+  <% if(page-1){ %>
+    <li><a title="上一页" href="?p=<%= page-1 %>">上一页</a></li>
+	<% } %>
+	<% for(var i=1;i<=pagenum2;i++){ %>
+	<li><a title="i" href="?p=<%= start%>"><%= start%></a></li>	
+	<% pagenum=pagenum-1;%>
+	<% start=start+1; %>
+	<%  }%>
+	<%if(pagenum2>page){%>
+    <li><a title="下一页" href="?p=<%= page+1 %>">下一页</a></li>
+	<%}%>
+  </ul>
+</div>
+<b class="rbottom"><b class="r4"></b><b class="r3"></b><b class="r2"></b><b class="r1"></b></b></div>
+<%- include footer %>
